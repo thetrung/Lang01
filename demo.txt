@@ -1,0 +1,86 @@
+﻿--
+-- Intro :
+-- The language aim to be simple like lua, but with
+-- the clarity of assembly language structure.
+-- Where Label and Jump are still popular for loop.
+--
+-- The intepreter also maintain its own stack,
+-- that user can resize on init.
+--
+-- It will only have: lua-like Table, Boolean, Double, String
+-- bytecode translate on parsing then intepret.
+--
+-- Mechanism :
+-- Source Code > Parsed to ByteCode > Loaded to Exec Stack
+--
+-- From here, Intepreter will read & execute on its memory.
+--
+
+local square ( n )
+ret [n * n]
+
+func square_test ()
+push 10
+call square
+end
+
+local fib ( n acc )
+push n
+jmp> 0 loop              -- we have jmp>, jmp<, jmp=, jne, jge, jle and jmp
+ret acc
+loop:                       -- label is in-effect only within its scope. 
+    push [acc + n]
+    push [n - 1]
+    call fib
+
+func fib_test ()
+push 10 0
+call fib
+end
+
+func hello ()
+push "Hello World !"
+call print               -- => Hello World !
+end
+
+func table ()
+push { 1, 2, 3 }
+type
+call print              -- => type: table
+end
+
+local table_iter ( arr )
+load arr                 -- => load all args to stack
+loop:
+    dup
+    call tostring
+    call print
+    nil?
+    jmp! loop
+end
+
+func table_iter_test ()
+push { 1, 2, 3 }
+call table_iter
+end
+
+--
+-- Main Body
+--
+
+local test 0
+global test 0
+
+local functions {
+    square_test, fib_test, hello,
+    table, table_iter_test
+}
+
+load functions
+loop:
+    call _
+    nil?
+    jmp! loop
+
+push "Called all functions."
+call print
