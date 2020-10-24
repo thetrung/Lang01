@@ -11,6 +11,7 @@ I used to write dozen of languages intepreter & compiler in the last decade ( 20
 - The intepreter also maintain its own stack, that user can resize on init.
 - It will only have data types: lua-like Table, Boolean, Double, String.
 - Bytecode translate on parsing before intepreting.
+- Most important: bring back the FLOW state to programming.
 
 ### Mechanism
 
