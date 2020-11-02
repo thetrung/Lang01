@@ -26,7 +26,7 @@ end
 
 local fib ( n acc )
 push n
-jmp> 0 loop              -- we have jmp>, jmp<, jmp=, jne, jge, jle and jmp
+jmp> 0 loop              -- we have jmp>, jmp<, jmp=, jne, jge, jle, jmp!, jmp? and jmp
 ret acc
 loop:                       -- label is in-effect only within its scope. 
     push [acc + n]
@@ -80,7 +80,7 @@ load functions
 loop:
     call _
     nil?
-    jmp! loop
+    jmp! loop -- jump if false
 
 push "Called all functions."
 call print
