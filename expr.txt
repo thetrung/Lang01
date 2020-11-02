@@ -1,0 +1,28 @@
+func Add ( a  b )
+push ( a + b )
+ret               -- return topmost node on stack
+
+func Mul ( a b )
+push ( a * b )
+ret
+
+func Var ( env name val )
+push [ name val ] -- push an array to stack
+local _           -- make local variable
+end
+
+local expr = { [a b], Mul, [a 3], Var, [b 4], Var } 
+
+func Eval ( expr )
+load expr         -- load all elements in List to stack
+Loop : 
+  nil?            -- check if stack nil?
+  jmp? Exit       -- jump if true     
+  call _          -- call whatever on stack
+  jmp Loop        -- jump to Loop
+Exit : 
+  call print      -- print whatever remaining on stack
+end
+
+push expr
+call Eval
