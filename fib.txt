@@ -1,0 +1,9 @@
+func fib [ n acc ]
+push ( n > 0 )
+jmp? loop
+ret acc
+loop:
+    push ( acc + n )
+    push ( n - 1 )
+    call fib
+end
